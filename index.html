@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santiago Lorido | Software Engineering Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#F8FAFC',
+                            800: '#1E293B',
+                        },
+                        blue: {
+                            600: '#3B82F6',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .transition-all { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans leading-relaxed selection:bg-blue-600 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="text-xl font-bold tracking-tight text-slate-800">Santiago Lorido</span>
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="#bio" class="hover:text-blue-600 transition-all">Bio</a>
+                <a href="#projects" class="hover:text-blue-600 transition-all">Projects</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-5xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold text-slate-800 mb-6 tracking-tight">
+                Software Engineering <br><span class="text-blue-600">for the future.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl">
+                Passionate developer focused on building scalable, efficient, and user-centric digital solutions.
+            </p>
+        </div>
+    </header>
+
+    <!-- Bio Section -->
+    <section id="bio" class="py-16 px-6">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">About Me</h2>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                <p class="text-lg text-slate-700 leading-relaxed">
+                    Santiago Lorido is a dedicated and highly motivated student with a strong passion for software engineering and problem-solving. Currently pursuing a degree in computer science, Santiago has developed a robust technical foundation and a professional mindset geared toward building efficient and scalable digital solutions. With a focus on continuous improvement and collaboration, he is adept at navigating complex technical challenges and working effectively in team environments. Santiago is characterized by his proactive learning style and his ability to translate theoretical knowledge into practical, high-quality applications. He is eager to leverage his technical expertise and professional drive to contribute to innovative projects during a summer internship.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 px-6 bg-white">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">Featured Project</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Visual Component -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-xl shadow-slate-200 border border-slate-200">
+                    <img src='https://opal.google/board/blobs/ae6ff207-1206-478a-b515-5560f9db2c33' alt='Project preview' class="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105" />
+                </div>
+
+                <!-- Content Component -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold text-slate-800">[Insert Project Name]</h3>
+                    <p class="text-slate-600">
+                        This project is a comprehensive software solution designed to address [Insert Problem or Purpose]. It represents a significant milestone in my development portfolio, demonstrating my ability to manage the full software development lifecycle from initial design to implementation.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <ul class="list-disc list-inside text-slate-700 space-y-2">
+                            <li>Responsive UI & Accessibility first</li>
+                            <li>Efficient backend system design</li>
+                            <li>API integration and optimization</li>
+                            <li>Rigorous testing standards</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="https://github.com/santilorido" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            View Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal Footer -->
+    <footer class="py-12 text-center">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="https://github.com/santilorido" target="_blank" class="text-slate-400 hover:text-blue-600 transition-all font-medium uppercase tracking-widest text-xs">GitHub Profile</a>
+        </div>
+        <p class="text-slate-400 text-sm">© 2024 Santiago Lorido. Built for impact.</p>
+    </footer>
+
+</body>
+</html>
