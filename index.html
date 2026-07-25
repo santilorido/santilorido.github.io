@@ -7,12 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         slate: {
                             50: '#F8FAFC',
                             800: '#1E293B',
+                            900: '#0F172A',
                         },
                         blue: {
                             600: '#3B82F6',
@@ -27,55 +29,60 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        
         .transition-all { transition: all 0.3s ease; }
     </style>
+    
+    <!-- Script to prevent Flash of Unstyled Content (FOUC) in dark mode -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased font-sans leading-relaxed selection:bg-blue-600 selection:text-white">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 antialiased font-sans leading-relaxed selection:bg-blue-600 selection:text-white transition-colors duration-300">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass border-b border-slate-200">
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="text-xl font-bold tracking-tight text-slate-800">Santiago Lorido</span>
-            <div class="flex gap-8 text-sm font-medium">
-                <a href="#bio" class="hover:text-blue-600 transition-all">Bio</a>
-                <a href="#projects" class="hover:text-blue-600 transition-all">Projects</a>
+            <span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">Santiago Lorido</span>
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <a href="#bio" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Bio</a>
+                <a href="#projects" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Projects</a>
+                
+                <!-- Dark Mode Toggle Button -->
+                <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none rounded-lg text-sm p-2 transition-colors">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
             </div>
         </div>
     </nav>
 
- <!-- Hero Section -->
+    <!-- Hero Section -->
     <header class="pt-32 pb-16 px-6">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-5xl md:text-7xl font-bold text-slate-800 mb-6 tracking-tight">
+            <h1 class="text-5xl md:text-7xl font-bold text-slate-800 dark:text-white mb-6 tracking-tight">
                 Software Engineering <br><span class="text-blue-600">for the future.</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mb-8 leading-relaxed">
+            <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mb-8 leading-relaxed">
                 4th-year Informatics Engineering student at FIUBA, specializing in robust backend architecture and full-stack development. I am passionate about building highly scalable, concurrent systems using Rust and FastAPI, with a strong focus on the Actor model and memory-safe execution.
             </p>
             
             <!-- Call to Action Buttons -->
             <div class="flex flex-wrap gap-4">
-                <!-- LinkedIn -->
                 <a href="https://www.linkedin.com/in/santiago-lorido/" target="_blank" rel="noopener noreferrer" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 flex items-center gap-2">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     LinkedIn
                 </a>
                 
-                <!-- GitHub -->
-                <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="bg-slate-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg flex items-center gap-2">
+                <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="bg-slate-800 dark:bg-slate-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg flex items-center gap-2">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                     GitHub
                 </a>
 
-                <!-- Email -->
-                <a href="mailto:santilorido@gmail.com" class="bg-white text-slate-800 border border-slate-200 px-6 py-3 rounded-lg font-semibold hover:bg-slate-50 transition-all shadow-sm flex items-center gap-2">
+                <a href="mailto:santilorido@gmail.com" class="bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 px-6 py-3 rounded-lg font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                     Email Me
                 </a>
@@ -86,118 +93,119 @@
     <!-- Bio Section -->
     <section id="bio" class="py-16 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8 text-slate-800">About Me</h2>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 max-w-3xl">
-                <p class="text-lg text-slate-700 leading-relaxed mb-4">
+            <h2 class="text-3xl font-bold mb-8 text-slate-800 dark:text-white">About Me</h2>
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 max-w-3xl transition-colors duration-300">
+                <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
                     I am a 4th-year Informatics Engineering student at the University of Buenos Aires (UBA). My technical foundation spans full-stack software development and systems architecture, with a strong focus on building scalable, efficient backends.
                 </p>
-                <p class="text-lg text-slate-700 leading-relaxed mb-4">
+                <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
                     I specialize in object-oriented programming and have hands-on experience with Java (Spring Boot), C++, and Python. I also enjoy diving deep into concurrent programming, synchronization primitives, and memory-safe asynchronous execution using Rust and FastAPI.
                 </p>
-                <p class="text-lg text-slate-700 leading-relaxed">
+                <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                     Beyond coding, my commercial experience in dynamic, customer-facing roles at Equus Argentina has sharpened my adaptability and problem-solving abilities. I am eager to combine this proactive mindset with my technical expertise to contribute to innovative projects during my first professional IT experience.
                 </p>
+                
                 <!-- Technical Skills Badges -->
-<div class="mt-8 pt-8 border-t border-slate-100">
-    <h3 class="text-xl font-bold mb-5 text-slate-800">Technical Arsenal</h3>
-    
-    <div class="space-y-5">
-        <!-- Programming Languages -->
-        <div>
-            <h4 class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">Languages</h4>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-slate-50 text-slate-700 rounded-full text-sm font-semibold border border-slate-200 hover:border-blue-400 transition-all cursor-default">Rust</span>
-                <span class="px-3 py-1 bg-slate-50 text-slate-700 rounded-full text-sm font-semibold border border-slate-200 hover:border-blue-400 transition-all cursor-default">Java</span>
-                <span class="px-3 py-1 bg-slate-50 text-slate-700 rounded-full text-sm font-semibold border border-slate-200 hover:border-blue-400 transition-all cursor-default">C++ / C++20</span>
-                <span class="px-3 py-1 bg-slate-50 text-slate-700 rounded-full text-sm font-semibold border border-slate-200 hover:border-blue-400 transition-all cursor-default">Python 3</span>
-                <span class="px-3 py-1 bg-slate-50 text-slate-700 rounded-full text-sm font-semibold border border-slate-200 hover:border-blue-400 transition-all cursor-default">TypeScript</span>
-                <span class="px-3 py-1 bg-slate-50 text-slate-700 rounded-full text-sm font-semibold border border-slate-200 hover:border-blue-400 transition-all cursor-default">Clojure</span>
-            </div>
-        </div>
+                <div class="mt-8 pt-8 border-t border-slate-100 dark:border-slate-700">
+                    <h3 class="text-xl font-bold mb-5 text-slate-800 dark:text-white">Technical Arsenal</h3>
+                    
+                    <div class="space-y-5">
+                        <!-- Programming Languages -->
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 dark:text-slate-500 mb-3 uppercase tracking-widest">Languages</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all cursor-default">Rust</span>
+                                <span class="px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all cursor-default">Java 14</span>
+                                <span class="px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all cursor-default">C++ / C++20</span>
+                                <span class="px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all cursor-default">Python 3</span>
+                                <span class="px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all cursor-default">TypeScript</span>
+                                <span class="px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all cursor-default">Clojure</span>
+                            </div>
+                        </div>
 
-        <!-- Frameworks & Infrastructure -->
-        <div>
-            <h4 class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">Frameworks & Infrastructure</h4>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">Spring Boot</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">FastAPI</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">Actix & Tokio</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">React / Next.js</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">PostgreSQL</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">Docker</span>
-                <span class="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-200 cursor-default">Tailwind CSS</span>
-            </div>
-        </div>
+                        <!-- Frameworks & Infrastructure -->
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 dark:text-slate-500 mb-3 uppercase tracking-widest">Frameworks & Infrastructure</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">Spring Boot</span>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">FastAPI</span>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">Actix & Tokio</span>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">React / Next.js</span>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">PostgreSQL</span>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">Docker</span>
+                                <span class="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold border border-blue-200 dark:border-blue-800/50 cursor-default">Tailwind CSS</span>
+                            </div>
+                        </div>
 
-        <!-- Core Competencies -->
-        <div>
-            <h4 class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">Core Competencies</h4>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-slate-800 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Concurrent Programming</span>
-                <span class="px-3 py-1 bg-slate-800 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Distributed Systems & 2PC</span>
-                <span class="px-3 py-1 bg-slate-800 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">REST APIs & Sockets</span>
-                <span class="px-3 py-1 bg-slate-800 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Object-Oriented Design</span>
-                <span class="px-3 py-1 bg-slate-800 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Agile (MVP & User Story Mapping)</span>
-            </div>
-        </div>
-    </div>
-</div>
+                        <!-- Core Competencies -->
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 dark:text-slate-500 mb-3 uppercase tracking-widest">Core Competencies</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-800 dark:bg-blue-600 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Concurrent Programming</span>
+                                <span class="px-3 py-1 bg-slate-800 dark:bg-blue-600 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Distributed Systems & 2PC</span>
+                                <span class="px-3 py-1 bg-slate-800 dark:bg-blue-600 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">REST APIs & Sockets</span>
+                                <span class="px-3 py-1 bg-slate-800 dark:bg-blue-600 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Object-Oriented Design</span>
+                                <span class="px-3 py-1 bg-slate-800 dark:bg-blue-600 text-white rounded-full text-sm font-semibold shadow-sm cursor-default">Agile (MVP & User Story Mapping)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-16 px-6 bg-white">
+    <section id="projects" class="py-16 px-6 bg-white dark:bg-slate-900 transition-colors duration-300">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 text-slate-800">Featured Projects</h2>
+            <h2 class="text-3xl font-bold mb-12 text-slate-800 dark:text-white">Featured Projects</h2>
             
             <!-- Project 1: Consorcio Digital -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="grid grid-cols-2 gap-4">
-                    <img src="photos/consorcio1.jpeg" alt="Consorcio Digital App View 1" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/consorcio2.jpeg" alt="Consorcio Digital App View 2" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/consorcio3.jpeg" alt="Consorcio Digital App View 3" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/consorcio4.jpeg" alt="Consorcio Digital App View 4" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/consorcio1.jpeg" alt="Consorcio Digital App View 1" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/consorcio2.jpeg" alt="Consorcio Digital App View 2" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/consorcio3.jpeg" alt="Consorcio Digital App View 3" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/consorcio4.jpeg" alt="Consorcio Digital App View 4" class="w-full aspect-video object-cover object-top rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Consorcio Digital</h3>
-                        <p class="text-slate-600 leading-relaxed">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Consorcio Digital</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
                             A comprehensive web platform designed to automate building management workflows for administrators and owners. Developed collaboratively, this system tackles complex logic like equitable coproperty distribution and real-time financial reporting.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Agile & Product Management</h4>
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Agile & Product Management</h4>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span class="text-slate-700 leading-relaxed text-sm"><strong>Product Discovery:</strong> Conducted targeted user interviews with administrators and owners to build a Product Vision Board and validate core hypotheses via an Experiment Canvas.</span>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-slate-700 dark:text-slate-300 leading-relaxed text-sm"><strong>Product Discovery:</strong> Conducted targeted user interviews with administrators and owners to build a Product Vision Board and validate core hypotheses via an Experiment Canvas.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span class="text-slate-700 leading-relaxed text-sm"><strong>User Story Mapping:</strong> Strategically scoped a functional MVP focusing on essential workflows (authentication, expense generation), while defining a clear roadmap for future iterations.</span>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-slate-700 dark:text-slate-300 leading-relaxed text-sm"><strong>User Story Mapping:</strong> Strategically scoped a functional MVP focusing on essential workflows (authentication, expense generation), while defining a clear roadmap for future iterations.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <span class="text-slate-700 leading-relaxed text-sm"><strong>Continuous Iteration:</strong> Executed usability testing with target users to drive an Improvement Plan, successfully resolving UX friction points and edge-case logic.</span>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-slate-700 dark:text-slate-300 leading-relaxed text-sm"><strong>Continuous Iteration:</strong> Executed usability testing with target users to drive an Improvement Plan, successfully resolving UX friction points and edge-case logic.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-3 pt-4 border-t border-slate-100">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Technical Implementation</h4>
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Technical Implementation</h4>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Tech Stack:</strong> Python (FastAPI), React/Next.js, TypeScript, PostgreSQL, and Tailwind CSS.
                         </p>
-                        <p class="text-slate-700 text-sm">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             Engineered a robust REST API featuring Role-Based Access Control (RBAC), automated background email notifications, and dynamic metrics dashboards.
                         </p>
                     </div>
 
                     <div class="pt-4 flex flex-wrap gap-4">
-                        <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             View My GitHub
                         </a>
@@ -205,48 +213,48 @@
                 </div>
             </div>
 
-            <hr class="my-24 border-slate-200">
+            <hr class="my-24 border-slate-200 dark:border-slate-800">
 
             <!-- Project 2: Need For Speed -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="grid grid-cols-2 gap-4">
-                    <img src="photos/nfs1.png" alt="Need for Speed Clone View 1" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/nfs2.png" alt="Need for Speed Clone View 2" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/nfs3.png" alt="Need for Speed Clone View 3" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/nfs4.png" alt="Need for Speed Clone View 4" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/nfs1.png" alt="Need for Speed Clone View 1" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/nfs2.png" alt="Need for Speed Clone View 2" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/nfs3.png" alt="Need for Speed Clone View 3" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/nfs4.png" alt="Need for Speed Clone View 4" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Need for Speed Clone (C++ Multiplayer Engine)</h3>
-                        <p class="text-slate-600 leading-relaxed text-sm">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Need for Speed Clone (C++ Multiplayer Engine)</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                             As the <strong>Lead Server Developer</strong> for this 4-person team, I architected the multiplayer backend for a racing game built entirely from scratch. While my teammates focused on the Qt/SDL2 graphical client, I drove the low-level systems programming, custom networking, and real-time server-side physics calculations.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Server Architecture & Concurrency</h4>
-                        <ul class="space-y-3 text-sm text-slate-700">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Server Architecture & Concurrency</h4>
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Custom TCP Protocol & Matchmaking:</strong> Built a thread-per-client server using POSIX sockets. Managed concurrent lobbies and real-time game states using a custom binary serialization protocol with Big-Endian network byte order processing.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Thread-Safe Data Structures:</strong> Engineered mutex-guarded mechanisms, including a custom Multi-Producer/Multi-Consumer (MPMC) blocking queue, to safely synchronize data between asynchronous network handlers and the 60-FPS game loop thread.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Authoritative Physics (Box2D):</strong> Integrated Box2D on the server for rigid body dynamics, resolving collisions via a custom dispatcher to ensure a deterministic, cheat-resistant simulation across all connected clients.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Server Stack (My Focus):</strong> C++20, Box2D, POSIX Sockets, Multithreading, YAML.
                         </p>
-                        <p class="text-slate-700 text-sm">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Client Stack (Team):</strong> Qt 5/6, SDL2, SDL2_mixer.
                         </p>
                     </div>
@@ -256,7 +264,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             Watch Trailer
                         </a>
-                        <a href="https://github.com/florovenza/TpGrupal_NeedForSpeed" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://github.com/florovenza/TpGrupal_NeedForSpeed" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             View Repository
                         </a>
@@ -264,49 +272,49 @@
                 </div>
             </div>
 
-            <hr class="my-24 border-slate-200">
+            <hr class="my-24 border-slate-200 dark:border-slate-800">
 
             <!-- Project 3: Distributed Bicycle & Banking System -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="grid grid-cols-2 gap-4">
-                    <img src="photos/concu1.png" alt="Distributed System Architecture View 1" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/concu2.png" alt="Distributed System Architecture View 2" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/concu1.png" alt="Distributed System Architecture View 1" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/concu2.png" alt="Distributed System Architecture View 2" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Distributed Bicycle & Banking System (Rust)</h3>
-                        <p class="text-slate-600 leading-relaxed text-sm">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Distributed Bicycle & Banking System (Rust)</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                             A fault-tolerant, concurrent distributed system built completely from scratch in Rust. The architecture coordinates a network of bike-sharing stations communicating over a logical ring, paired with a replicated banking cluster running a Two-Phase Commit (2PC) consensus protocol.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Systems Architecture & Concurrency</h4>
-                        <ul class="space-y-3 text-sm text-slate-700">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Systems Architecture & Concurrency</h4>
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Actor-Based Concurrency (Actix):</strong> Built using the Actor Model for asynchronous message passing, ensuring thread-safe state isolation across stations, network dispatchers, and bank replicas without explicit low-level lock contention.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Distributed Consensus (2PC & Ring Elections):</strong> Implemented a partition-tolerant Two-Phase Commit protocol with majority quorums for bank transactions, alongside a self-healing ring topology featuring automated leader election algorithms.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Custom TCP Multiplexing Protocol:</strong> Designed dual-port TCP listeners per station for internal network rings and client CLI handling, processing raw binary frames and structured JSON payloads asynchronously via Tokio.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Tech Stack:</strong> Rust, Actix Framework, Tokio (Async Networking), Serde (JSON/Binary Serialization), TCP Sockets.
                         </p>
                     </div>
 
                     <div class="pt-4 flex flex-wrap gap-4">
-                        <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             View Repository
                         </a>
@@ -314,58 +322,58 @@
                 </div>
             </div>
 
-            <hr class="my-24 border-slate-200">
+            <hr class="my-24 border-slate-200 dark:border-slate-800">
 
             <!-- Project 4: Sistema de Comedor -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="grid grid-cols-2 gap-4">
-                    <img src="photos/comedor1.png" alt="Cafeteria System View 1" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/comedor4.png" alt="Cafeteria System View 2" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/comedor3.png" alt="Cafeteria System View 3" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
-                    <img src="photos/comedor2.png" alt="Cafeteria System View 4" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/comedor1.png" alt="Cafeteria System View 1" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/comedor4.png" alt="Cafeteria System View 2" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/comedor3.png" alt="Cafeteria System View 3" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/comedor2.png" alt="Cafeteria System View 4" class="w-full aspect-video object-cover object-center rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Campus Cafeteria System</h3>
-                        <p class="text-slate-600 leading-relaxed text-sm">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Campus Cafeteria System</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                             A full-stack web platform designed to streamline ordering and inventory management for a university cafeteria. I drove the development through a strict Agile process while engineering a highly scalable, pattern-driven Spring Boot backend.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Backend Architecture & Engineering</h4>
-                        <ul class="space-y-3 text-sm text-slate-700">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Backend Architecture & Engineering</h4>
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Dynamic Rule Engine:</strong> Architected a promotions and business logic engine utilizing the Strategy and Factory patterns to evaluate complex, composable discounts (e.g., NxM, Time-based) dynamically at runtime.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Event-Driven State:</strong> Decoupled core services using Spring ApplicationEvents, allowing the inventory service to broadcast asynchronous stock updates that automatically re-evaluate and trigger menu availability.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Secure REST API:</strong> Configured stateless JWT authentication with Role-Based Access Control (RBAC), integrating secure registration tokens, automated email dispatchers, and OpenAPI/Swagger documentation.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Agile & Product Management</h4>
-                        <p class="text-slate-700 text-sm leading-relaxed">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Agile & Product Management</h4>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
                             Utilized Empathy Mapping, User Personas, and User Story Mapping to prioritize a Minimum Viable Product (MVP) that solved real bottlenecks for both students and kitchen staff.
                         </p>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Tech Stack:</strong> Java (Spring Boot), React, TypeScript, PostgreSQL, and Docker.
                         </p>
                     </div>
 
                     <div class="pt-4 flex flex-wrap gap-4">
-                        <a href="https://gitlab.com/ayudantes-ingsoft/sistema-comedor-grupo-04" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://gitlab.com/ayudantes-ingsoft/sistema-comedor-grupo-04" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 5.1 2h.05a.42.42 0 0 1 .4.28l2.44 7.51L12 12l4-2.21 2.44-7.51a.42.42 0 0 1 .4-.28h.05a.42.42 0 0 1 .39.28l2.44 7.51 1.22 3.78a.84.84 0 0 1-.3.94z"/></svg>
                             View GitLab Repository
                         </a>
@@ -373,51 +381,51 @@
                 </div>
             </div>
 
-            <hr class="my-24 border-slate-200">
+            <hr class="my-24 border-slate-200 dark:border-slate-800">
 
             <!-- Project 5: Linux Robots Clone -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 
                 <!-- Visual Component: Single Photo (Scaled Down, No Background) -->
                 <div class="flex items-center justify-center">
-                    <img src="photos/robots.png" alt="Linux Robots Clone Gameplay" class="w-3/4 md:w-2/3 h-auto object-contain rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/robots.png" alt="Linux Robots Clone Gameplay" class="w-3/4 md:w-2/3 h-auto object-contain rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
                 </div>
 
                 <!-- Content Component -->
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Linux Robots Clone (JavaFX)</h3>
-                        <p class="text-slate-600 leading-relaxed text-sm">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Linux Robots Clone (JavaFX)</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                             A desktop replica of the classic turn-based Linux "Robots" game. This academic project showcases strong Object-Oriented Programming (OOP) fundamentals, utilizing Java and JavaFX to build a responsive, grid-based graphical interface.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Object-Oriented Design</h4>
-                        <ul class="space-y-3 text-sm text-slate-700">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Object-Oriented Design</h4>
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Polymorphic Entities:</strong> Modeled game characters using abstract classes, implementing distinct movement behaviors for standard and fast-paced robot enemies.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Game Logic & State:</strong> Handled complex 2D grid collisions, safe/random player teleportation mechanics, and deterministic pathfinding for enemies.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Build Management:</strong> Configured and packaged the JavaFX application and its dependencies strictly through Maven.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Tech Stack:</strong> Java 14, JavaFX 13, Maven.
                         </p>
                     </div>
 
                     <div class="pt-4 flex flex-wrap gap-4">
-                        <a href="https://github.com/santilorido/tp1-404-nombre-not-found" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://github.com/santilorido/tp1-404-nombre-not-found" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             View Repository
                         </a>
@@ -426,51 +434,51 @@
             </div>
 
             <!-- Divider -->
-            <hr class="my-24 border-slate-200">
+            <hr class="my-24 border-slate-200 dark:border-slate-800">
 
             <!-- Project 6: L-System & Turtle Engine -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 
                 <!-- Visual Component: Single Photo (Scaled Down, No Background) -->
                 <div class="flex items-center justify-center">
-                    <img src="photos/l_system.svg" alt="L-System SVG Output" class="w-3/4 md:w-2/3 h-auto object-contain rounded-xl shadow-md border border-slate-100 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/l_system.svg" alt="L-System SVG Output" class="w-3/4 md:w-2/3 h-auto object-contain rounded-xl shadow-md border border-slate-100 dark:border-slate-700 transition-transform duration-300 hover:scale-105 dark:bg-white p-2" />
                 </div>
 
                 <!-- Content Component -->
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Fractal L-System & Turtle Engine</h3>
-                        <p class="text-slate-600 leading-relaxed text-sm">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Fractal L-System & Turtle Engine</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                             A purely functional application built in Clojure that parses Lindenmayer systems (L-systems), recursively expands string axioms, and generates complex fractal geometry exported natively as SVG files.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Functional & Algorithmic Design</h4>
-                        <ul class="space-y-3 text-sm text-slate-700">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Functional & Algorithmic Design</h4>
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Stack-Based Turtle Graphics:</strong> Implemented a recursive graphical engine (`tortuga.clj`) that manages state—including coordinates, rotation, color branching, and stroke widths—using stack operations to dynamically save and restore rendering paths.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Mathematical Geometry:</strong> Engineered custom displacement algorithms utilizing trigonometric functions (sine/cosine converted to radians) to calculate precise point-to-point translations during the drawing phase.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Dynamic SVG Generation:</strong> Designed a responsive SVG renderer (`svg.clj`) that calculates the minimum and maximum geometric extremes of the entire resulting path to dynamically generate perfectly padded `viewBox` attributes.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Tech Stack:</strong> Clojure, Functional Programming, SVG, Math.
                         </p>
                     </div>
 
                     <div class="pt-4 flex flex-wrap gap-4">
-                        <a href="https://github.com/santilorido/sistemas_l" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://github.com/santilorido/sistemas_l" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             View Repository
                         </a>
@@ -478,55 +486,55 @@
                 </div>
             </div>
             <!-- Divider -->
-            <hr class="my-24 border-slate-200">
+            <hr class="my-24 border-slate-200 dark:border-slate-800">
 
             <!-- Project 7: Recomendify -->
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 
                 <!-- Visual Component: Data Graph (Scaled Down) -->
                 <div class="flex items-center justify-center">
-                    <img src="photos/graph.jpg" alt="Abstract Data Graph Visualization" class="w-2/3 md:w-1/2 max-h-80 object-cover rounded-xl shadow-lg border border-slate-800 transition-transform duration-300 hover:scale-105" />
+                    <img src="photos/graph.jpg" alt="Abstract Data Graph Visualization" class="w-2/3 md:w-1/2 max-h-80 object-cover rounded-xl shadow-lg border border-slate-800 dark:border-slate-700 transition-transform duration-300 hover:scale-105" />
                 </div>
 
                 <!-- Content Component -->
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Recomendify (Spotify Graph Analyzer)</h3>
-                        <p class="text-slate-600 leading-relaxed text-sm">
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Recomendify (Spotify Graph Analyzer)</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                             A high-performance, terminal-based recommendation engine built in Python. The application analyzes Spotify data to find relationships between users and songs, generate intelligent recommendations, and calculate overall track importance.
                         </p>
                     </div>
                     
                     <div class="space-y-3">
-                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">Data Structures & Algorithms</h4>
-                        <ul class="space-y-3 text-sm text-slate-700">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Data Structures & Algorithms</h4>
+                        <ul class="space-y-3 text-sm text-slate-700 dark:text-slate-300">
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Custom Graph Architecture:</strong> Engineered a from-scratch `Grafo` data structure supporting both directed and undirected edge relationships for rapid adjacency lookups.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>PageRank Implementation:</strong> Developed both standard and personalized iterations of the PageRank algorithm to mathematically determine node importance and surface targeted recommendations.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>Complex Traversal:</strong> Utilized Breadth-First Search to calculate the shortest paths between entities, alongside algorithms for cycle detection and finding vertices at specific distances.</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span><strong>CLI Processing:</strong> Designed a robust Command Line Interface that parses standard input to dynamically execute analytical commands like `recomendacion`, `ciclo`, and `camino`.</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="space-y-2 pt-4 border-t border-slate-100">
-                        <p class="text-slate-700 text-sm">
+                    <div class="space-y-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
                             <strong>Tech Stack:</strong> Python 3, Graph Theory.
                         </p>
                     </div>
 
                     <div class="pt-4 flex flex-wrap gap-4">
-                        <a href="https://github.com/santilorido/recomendify" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 transition-all shadow-lg text-sm">
+                        <a href="https://github.com/santilorido/recomendify" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-slate-800 dark:bg-slate-700 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-slate-700 dark:hover:bg-slate-600 transition-all shadow-lg text-sm">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             View Repository
                         </a>
@@ -537,13 +545,52 @@
     </section>
 
     <!-- Minimal Footer -->
-    <footer class="py-12 text-center border-t border-slate-200 mt-16 bg-white">
+    <footer class="py-12 text-center border-t border-slate-200 dark:border-slate-800 mt-16 bg-white dark:bg-slate-900 transition-colors duration-300">
         <div class="flex justify-center gap-8 mb-6">
-            <a href="https://github.com/santilorido" target="_blank" class="text-slate-500 hover:text-blue-600 transition-all font-semibold uppercase tracking-widest text-xs">GitHub Profile</a>
-            <a href="mailto:santilorido@gmail.com" class="text-slate-500 hover:text-blue-600 transition-all font-semibold uppercase tracking-widest text-xs">Email Me</a>
+            <a href="https://github.com/santilorido" target="_blank" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold uppercase tracking-widest text-xs">GitHub Profile</a>
+            <a href="mailto:santilorido@gmail.com" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold uppercase tracking-widest text-xs">Email Me</a>
         </div>
-        <p class="text-slate-400 text-sm">© 2026 Santiago Lorido. Built for impact.</p>
+        <p class="text-slate-400 dark:text-slate-500 text-sm">© 2026 Santiago Lorido. Built for impact.</p>
     </footer>
 
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Initial Icon State
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        themeToggleBtn.addEventListener('click', function() {
+            // Toggle icons
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // Determine current state and switch
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
