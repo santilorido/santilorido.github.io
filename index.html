@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Santiago Lorido | Software Engineering Portfolio</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Software Engineering Portfolio of Santiago Lorido, a 4th-year Informatics Engineering student at FIUBA specializing in robust backend architecture, concurrent systems, and full-stack development.">
+    <meta name="keywords" content="Santiago Lorido, Software Engineer, Backend Developer, Rust, Java, Python, FastAPI, Spring Boot, FIUBA, Portfolio">
+    <meta name="author" content="Santiago Lorido">
+
+    <!-- Open Graph / LinkedIn / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://santilorido.github.io/">
+    <meta property="og:title" content="Santiago Lorido | Software Engineering Portfolio">
+    <meta property="og:description" content="Passionate developer focused on building scalable, efficient, and user-centric digital solutions. Check out my latest projects in Rust, Java, and Python.">
+    <meta property="og:image" content="https://santilorido.github.io/photos/hero_section.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://santilorido.github.io/">
+    <meta property="twitter:title" content="Santiago Lorido | Software Engineering Portfolio">
+    <meta property="twitter:description" content="Passionate developer focused on building scalable, efficient, and user-centric digital solutions. Check out my latest projects in Rust, Java, and Python.">
+    <meta property="twitter:image" content="https://santilorido.github.io/photos/hero_section.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -43,14 +61,23 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 antialiased font-sans leading-relaxed selection:bg-blue-600 selection:text-white transition-colors duration-300">
 
-    <!-- Navbar -->
+<!-- Navbar -->
     <nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">Santiago Lorido</span>
-            <div class="flex items-center gap-6 text-sm font-medium">
-                <a href="#bio" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Bio</a>
-                <a href="#projects" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Projects</a>
+            <div class="flex items-center gap-4 md:gap-6 text-sm font-medium">
+                <a href="#bio" class="hidden md:block text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Bio</a>
+                <a href="#projects" class="hidden md:block text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Projects</a>
+                <a href="#contact" class="hidden md:block text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all">Contact</a>
                 
+                <!-- Subtle Divider -->
+                <div class="w-px h-5 bg-slate-200 dark:bg-slate-700 ml-2"></div>
+
+                <!-- GitHub Icon -->
+                <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors" aria-label="GitHub Profile">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                </a>
+
                 <!-- Dark Mode Toggle Button -->
                 <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none rounded-lg text-sm p-2 transition-colors">
                     <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -544,16 +571,22 @@
         </div>
     </section>
 
-    <!-- Minimal Footer -->
-    <footer class="py-12 text-center border-t border-slate-200 dark:border-slate-800 mt-16 bg-white dark:bg-slate-900 transition-colors duration-300">
-        <div class="flex justify-center gap-8 mb-6">
-            <a href="https://github.com/santilorido" target="_blank" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold uppercase tracking-widest text-xs">GitHub Profile</a>
+<!-- Minimal Footer -->
+    <footer id="contact" class="py-12 text-center border-t border-slate-200 dark:border-slate-800 mt-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+        <div class="flex flex-wrap justify-center gap-8 mb-6">
+            <a href="https://www.linkedin.com/in/santiago-lorido/" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold uppercase tracking-widest text-xs">LinkedIn</a>
+            <a href="https://github.com/santilorido" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold uppercase tracking-widest text-xs">GitHub Profile</a>
             <a href="mailto:santilorido@gmail.com" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all font-semibold uppercase tracking-widest text-xs">Email Me</a>
         </div>
         <p class="text-slate-400 dark:text-slate-500 text-sm">© 2026 Santiago Lorido. Built for impact.</p>
     </footer>
 
-    <!-- Dark Mode Toggle Script -->
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" class="fixed bottom-8 right-8 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:scale-110 transition-all duration-300 opacity-0 translate-y-10 pointer-events-none" aria-label="Back to top">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
+    <!-- Dark Mode Toggle and Scroll Scripts -->
     <script>
         var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -591,6 +624,27 @@
                 }
             }
         });
+
+        // Back to Top Button Logic
+        var backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', function() {
+            // Show button after scrolling down 400 pixels
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                // Hide button when near the top
+                backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        // Scroll to top smoothly when clicked
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
+
 </body>
 </html>
